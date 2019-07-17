@@ -1,0 +1,33 @@
+{
+  "name": "ib-scraper",
+  "version": "1.0.0",
+  "description": "Illiniboard web scraper",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "dev": "concurrently \"npm start\" \"npm run client-start\"",
+    "client-start": "npm start --prefix ./client",
+    "heroku-postbuild": "npm install --prefix ./client && npm run build --prefix ./client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/burke1791/ib-scraper.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/burke1791/ib-scraper/issues"
+  },
+  "homepage": "https://github.com/burke1791/ib-scraper#readme",
+  "dependencies": {
+    "axios": "^0.19.0",
+    "cheerio": "^1.0.0-rc.3",
+    "concurrently": "^4.1.1",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.6.5",
+    "nodemon": "^1.19.1",
+    "path": "^0.12.7"
+  }
+}
