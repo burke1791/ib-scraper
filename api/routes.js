@@ -1,13 +1,22 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
-const db = require('./models');
+const db = require('../models');
 
 module.exports = function(app) {
   app.get('/api/scrape', (req, res, next) => {
+    console.log('get articles hit');
     axios.get('https://illiniboard.com/').then(response => {
       var $ = cheerio.load(response.data);
 
-      // parse articles
+      $('.hp_secondary_article h4').each((i, element) => {
+        var result = {};
+
+        result.title = $(this).children('a').text();
+
+        console.log(result);
+      });
+
+      res.send(response.data);
     });
   });
 
