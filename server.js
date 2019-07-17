@@ -11,6 +11,8 @@ app.use(express.static(path.join(__dirname, 'client/build'))); // configure expr
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+require('./api/routes')(app);
+
 app.listen(PORT, function() {
   console.log('app listening on port: ' + PORT);
 });
