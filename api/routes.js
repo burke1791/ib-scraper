@@ -39,6 +39,11 @@ module.exports = function (app) {
 
   app.get('/api/articles', (req, res, next) => {
     // get all articles from mongodb
+    db.Article.find({}).then(articles => {
+      res.json(articles);
+    }).catch(error => {
+      res.json(error);
+    });
   });
 
   app.get('/api/articles/:id', (req, res, next) => {
