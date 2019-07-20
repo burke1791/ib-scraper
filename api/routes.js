@@ -47,7 +47,18 @@ module.exports = function (app) {
   });
 
   app.get('/api/articles/:id', (req, res, next) => {
-    // get a single article by its id
+    // get a single article by its id and return all of its notes
+    let articleId = req.params.id;
+    db.Article.findOne({ _id: articleId }).populate('note').exec((err, response) => {
+      if (err) {
+        console.log(err);
+        res.json(err);
+      } else {
+        console.log('populated response');
+        console.log(response);
+        res.json(response.note);
+      }
+    });
   });
 
   app.post('/api/articles/:id', (req, res, next) => {
@@ -59,15 +70,13 @@ module.exports = function (app) {
     db.Note.create(newNote).then(dbNote => {
       console.log(dbNote._id);
       console.log(req.params.id);
-      db.Article.findOneAndUpdate({ _id: req.params.id }, { $push: { 'Note': dbNote._id } }, (err, doc, response) => {
+      db.Article.findOneAndUpdate({ _id: req.params.id }, { $push: { note: dbNote._id } }, (err, doc, response) => {
         if (err) {
           console.log(err);
         } else {
-          console.log('success');
-          console.log(doc);
-          console.log(response);
+          res.status(200).json(dbNote);
         }
-      })
+      });
     });
   });
 }
@@ -78,9 +87,7 @@ const insertIfNotDuplicate = (article) => {
     if (dbArticle.length) {
       // do nothing
     } else {
-      db.Article.create(article).then(insertedArticle => {
-        // article inserted
-      });
+      db.Article.create(article);
     }
   }).catch(error => {
     console.log(error);
