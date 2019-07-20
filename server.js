@@ -6,6 +6,8 @@ const mongoose = require('mongoose');
 
 const app = express();
 
+console.log('mlab: ' + process.env.MONGOLAB_URI);
+
 const PORT = process.env.PORT || 3001;
 const mongodbUri = process.env.MONGODB_URI || "mongodb://localhost/ib_headlines";
 console.log(mongodbUri);

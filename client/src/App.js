@@ -24,6 +24,7 @@ function App() {
   const getAllArticles = () => {
     axios.get('/api/articles').then(response => {
       setArticles(response.data);
+      console.log('new articles set');
     });
   }
 
@@ -46,9 +47,8 @@ function App() {
 
   const generateArticleList = () => {
     if (articles.length) {
+      console.log('app should rerender');
       const list = articles.map(article => {
-        console.log(article);
-
         let title = article.title;
         let link = article.link;
         let summary = article.summary;
