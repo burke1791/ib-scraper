@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 3001;
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/ib_headlines";
 
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true }, err => {
-  if (err) throw err;
+  if (err) console.log(err);
 });
 
 var connection = mongoose.connection;
