@@ -1,6 +1,13 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
 const db = require('../models');
+const mongoose = require('mongoose');
+
+const mongodbUri = process.env.MONGODB_URI || "mongodb://localhost/ib_headlines";
+
+mongoose.connect(mongodbUri, { useNewUrlParser: true }, err => {
+  if (err) console.log(err);
+});
 
 module.exports = function (app) {
   app.get('/api/scrape', (req, res, next) => {
