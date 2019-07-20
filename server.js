@@ -8,8 +8,8 @@ const app = express();
 
 const PORT = process.env.PORT || 3001;
 const mongodbUri = process.env.MONGODB_URI || "mongodb://localhost/ib_headlines";
-
-mongoose.connect(mongodbUri, { useNewUrlParser: true, useMongoClient: true }, err => {
+console.log(mongodbUri);
+mongoose.connect(mongodbUri, { useNewUrlParser: true }, err => {
   if (err) console.log(err);
 });
 
