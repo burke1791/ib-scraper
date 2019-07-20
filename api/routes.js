@@ -34,6 +34,11 @@ module.exports = function (app) {
       res.status(200).json({
         message: 'scrape complete'
       });
+    }).catch(error => {
+      console.log(error);
+      res.status(404).json({
+        message: 'error scraping'
+      });
     });
   });
 
