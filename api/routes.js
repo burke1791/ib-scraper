@@ -87,6 +87,7 @@ module.exports = function (app) {
 }
 
 const insertIfNotDuplicate = (article) => {
+  console.log('insert if not duplicate fired');
   db.Article.find({ title: article.title }).then(dbArticle => {
     console.log(dbArticle);
     if (dbArticle.length) {
