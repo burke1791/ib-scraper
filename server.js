@@ -13,12 +13,17 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true }, err => {
   if (err) throw err;
 });
 
+var connection = mongoose.connection;
+
 app.use(express.static(path.join(__dirname, 'client/build'))); // configure express to serve the React static files
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 require('./api/routes')(app);
 
-app.listen(PORT, function() {
-  console.log('app listening on port: ' + PORT);
+connection.once('open', function() {
+  console.log('mongo connection established');
+  app.listen(PORT, function() {
+    console.log('app listening on port: ' + PORT);
+  });
 });
