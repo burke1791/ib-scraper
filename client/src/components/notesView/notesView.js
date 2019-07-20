@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
+import axios from 'axios';
 
 const customStyles = {
   content: {
@@ -24,6 +25,12 @@ function NotesView(props) {
 
   const saveNote = () => {
     // post to note save route
+    let note = {
+      content: noteText
+    };
+    axios.post('/api/articles/' + props.id, note).then(response => {
+      console.log(response);
+    });
   }
 
   const generateNotes = () => {
