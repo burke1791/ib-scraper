@@ -52,6 +52,23 @@ module.exports = function (app) {
 
   app.post('/api/articles/:id', (req, res, next) => {
     // post the user's note to the article by its id
+    let newNote = {
+      content: req.body.content
+    };
+    console.log(newNote);
+    db.Note.create(newNote).then(dbNote => {
+      console.log(dbNote._id);
+      console.log(req.params.id);
+      db.Article.findOneAndUpdate({ _id: req.params.id }, { $push: { 'Note': dbNote._id } }, (err, doc, response) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log('success');
+          console.log(doc);
+          console.log(response);
+        }
+      })
+    });
   });
 }
 
@@ -59,11 +76,10 @@ const insertIfNotDuplicate = (article) => {
   db.Article.find({ title: article.title }).then(dbArticle => {
     console.log(dbArticle);
     if (dbArticle.length) {
-      console.log('supposedly already exists - don\'t duplicate');
+      // do nothing
     } else {
-      console.log('article doesn\'t already exists - insert into db');
       db.Article.create(article).then(insertedArticle => {
-        console.log(insertedArticle);
+        // article inserted
       });
     }
   }).catch(error => {
