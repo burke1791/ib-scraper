@@ -7,7 +7,6 @@ import NotesView from './components/notesView/notesView';
 function App() {
   
   const [notesVisible, setNotesVisible] = useState(false);
-  const [articleNotes, setArticleNotes] = useState([]);
   const [selectedArticleId, setSelectedArticleId] = useState('');
   const [selectedArticleTitle, setSelectedArticleTitle] = useState('');
   const [articles, setArticles] = useState([]);
@@ -31,7 +30,6 @@ function App() {
   const getNotes = (articleId, title) => {
     setSelectedArticleTitle(title);
     setSelectedArticleId(articleId);
-    // API call to get notes
 
     showNotes();
   }
@@ -41,8 +39,8 @@ function App() {
   }
 
   const hideNotes = () => {
-    setArticleNotes([]);
     setSelectedArticleTitle('');
+    setSelectedArticleId('');
     setNotesVisible(false);
   }
 
@@ -72,7 +70,7 @@ function App() {
       <div className='articles'>
         {generateArticleList()}
       </div>
-      <NotesView title={selectedArticleTitle} id={setSelectedArticleId} notes={articleNotes} modalIsOpen={notesVisible} closeModal={hideNotes} />
+      <NotesView title={selectedArticleTitle} id={selectedArticleId} modalIsOpen={notesVisible} closeModal={hideNotes} />
     </div>
   );
 }
