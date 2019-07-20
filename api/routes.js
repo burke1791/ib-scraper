@@ -15,7 +15,7 @@ module.exports = function (app) {
         result.title = $(this).find('h4 a').text();
         result.link = url + $(this).find('h4 a').attr('href');
         result.summary = $(this).children('p').text();
-
+        console.log('title: ' + result.title)
         // console.log(result);
         insertIfNotDuplicate(result);
       });
