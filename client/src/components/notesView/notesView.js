@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import axios from 'axios';
 
@@ -17,7 +17,24 @@ const customStyles = {
 
 function NotesView(props) {
 
+  useEffect(() => {
+    fetchNotes();
+  }, [props.id]);
+
+  const [articleNotes, setArticleNotes] = useState([]);
   const [noteText, setNoteText] = useState('');
+
+  const fetchNotes = () => {
+    if (props.id) {
+      console.log(props.id);
+      console.log('fetchNotes called');
+      axios.get('/api/articles/' + props.id).then(response => {
+        console.log(response);
+        setArticleNotes(response.data);
+      });
+    }
+    
+  }
 
   const handleNoteChange = (event) => {
     setNoteText(event.target.value);
@@ -29,18 +46,20 @@ function NotesView(props) {
       content: noteText
     };
     axios.post('/api/articles/' + props.id, note).then(response => {
-      console.log(response);
+      setArticleNotes(articleNotes.concat(response.data));
+      setNoteText('');
     });
   }
 
   const generateNotes = () => {
-    if (props.notes.length) {
-      const list = props.notes.map(note => {
+    console.log('notes length: ' + articleNotes.length);
+    if (articleNotes.length) {
+      const list = articleNotes.map(note => {
         let author = note.author;
         let content = note.content;
 
         return (
-          <li className='list-group-item'>
+          <li className='list-group-item' key={note._id} style={{ paddingTop: '0', paddingBottom: '0' }}>
             <span className='author font-weight-bold'>{author}</span>
             <span className='content' style={{ float: 'right' }}>{content}</span>
           </li>
@@ -67,7 +86,7 @@ function NotesView(props) {
           <span aria-hidden='true'>&times;</span>
         </button>
       </div>
-      <div className='modal-body'>
+      <div className='modal-body' style={{ paddingTop: '0', paddingBottom: '0' }}>
         <ul className='list-group list-group-flush'>
           {generateNotes()}
         </ul>
