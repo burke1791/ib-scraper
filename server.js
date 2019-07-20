@@ -7,9 +7,9 @@ const mongoose = require('mongoose');
 const app = express();
 
 const PORT = process.env.PORT || 3001;
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/ib_headlines";
+const mongodbUri = process.env.MONGODB_URI || "mongodb://localhost/ib_headlines";
 
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true }, err => {
+mongoose.connect(mongodbUri, { useNewUrlParser: true }, err => {
   if (err) console.log(err);
 });
 
